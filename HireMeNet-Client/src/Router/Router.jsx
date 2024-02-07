@@ -4,16 +4,18 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import PostJob from "../pages/PostJob";
 import MyJobs from "../pages/MyJobs";
+import EstSal from "../pages/EstSal";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children : [
-        {path : "/",element : <Home/>,},
-        {path : "/post-job",element : <PostJob/>,},
-        {path : "/about",element : <About/>,},
-        {path : "/my-job",element : <MyJobs/>,}
+        {path : "/",element : <Home/>},
+        {path : "/post-job",element : <PostJob/>},
+        {path : "/about",element : <About/>},
+        {path : "/my-job",element : <MyJobs/>},
+        {path : "/salary",element : <EstSal/>}
     ]
   },
 ]);
