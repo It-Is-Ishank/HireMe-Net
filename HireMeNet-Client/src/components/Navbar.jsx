@@ -87,7 +87,8 @@ const Navbar = () => {
                 ) )
             }
 
-            <li className="text-white py-1"><Link to= "/login" >Log in</Link></li>
+            <li className="text-white py-1"><Link to= "/login" >Login</Link></li>
+            <li className="text-white py-1"><Link to= "/signup" >Sign Up</Link></li>
         </ul>
       </div>
     </header>
