@@ -15,7 +15,7 @@ const PostJob = () => {
   const onSubmit = (data) => {
     data.skills = selectedOption;
     //console.log(data)
-    fetch("http://localhost:5000/post-job",{
+    fetch("http://localhost:5000/api/employer/post-job",{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
@@ -114,7 +114,7 @@ const PostJob = () => {
 
           <div className="create-job-flex">
             <div className="lg:w-1/2 w-full">
-              <label className="block mb-2 text-lg">Job Posting Date</label>
+              <label className="block mb-2 text-lg">Job Posting End Date</label>
               <input
                 type="date"
                 placeholder="Ex: 2024-01-26"
@@ -181,7 +181,7 @@ const PostJob = () => {
             />
           </div>
 
-          <div className=" w-full">
+          {/* <div className=" w-full">
             <label className="block mb-2 text-lg">Job Posted By</label>
             <input
               type="text"
@@ -189,7 +189,7 @@ const PostJob = () => {
               {...register("postedBy")}
               className="create-job-input"
             />
-          </div>
+          </div> */}
 
           <input
             type="submit"

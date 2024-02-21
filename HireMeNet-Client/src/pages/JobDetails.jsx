@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import PageHeader from '../components/PageHeader';
+import moment from 'moment';
 
 const JobDetails = () => {
     const {id} = useParams();
@@ -50,10 +51,10 @@ const JobDetails = () => {
                     <strong>Salary Range:</strong> ${job.minPrice} - ${job.maxPrice} {job.salaryType}
                 </p>
                 <p>
-                    <strong>Posting Date:</strong> {new Date(job.postingDate).toLocaleDateString()}
+                    <strong>Posting Date:</strong> {moment(job.postingDate).format('YYYY-MM-DD')}
                 </p>
             </div>
-            <button className="bg-blue-500 px-8 py-3 text-white rounded" onClick={handleApply}>
+            <button className="bg-blue px-8 py-3 text-white rounded" onClick={handleApply}>
                 Apply Now
             </button>
         </div>

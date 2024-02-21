@@ -5,6 +5,7 @@ import Card from "../components/Card";
 import Sidebar from "../sidebar/Sidebar";
 import Newsletter from "../components/Newsletter";
 
+
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [jobs, setJobs] = useState([]);
@@ -15,7 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:5000/all-jobs")
+    fetch("http://localhost:5000/api/employee/jobs")
     //fetch("../public/jobs.json")
       .then((res) => res.json())
       .then((data) => {

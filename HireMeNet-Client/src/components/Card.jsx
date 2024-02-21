@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import {FiCalendar, FiClock, FiDollarSign, FiMapPin} from "react-icons/fi"
+import moment from 'moment'
 
 const Card = ({data}) => {
   const {_id , companyName,jobTitle,companyLogo,minPrice,maxPrice,salaryType,jobLocation,postingDate,experienceLevel,employmentType,description} = data;
@@ -17,7 +18,7 @@ const Card = ({data}) => {
               <span className='flex items-center gap-2'><FiMapPin/>{jobLocation}</span>
               <span className='flex items-center gap-2'><FiClock/>{employmentType}</span>
               <span className='flex items-center gap-2'><FiDollarSign/>{minPrice}-{maxPrice}k</span>
-              <span className='flex items-center gap-2'><FiCalendar/>{postingDate}</span>
+              <span className='flex items-center gap-2'><FiCalendar/>{moment(postingDate).format('YYYY-MM-DD')}</span>
             </div>
 
             <p className='text-base text-primary/70'>{description}</p>
