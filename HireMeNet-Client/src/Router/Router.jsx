@@ -8,6 +8,7 @@ import EstSal from "../pages/EstSal";
 import UpdateJob from "../pages/UpdateJob";
 import Login from "../components/Login";
 import JobDetails from "../pages/JobDetails";
+import Signup from "../components/Signup";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element : <Login/>
+  },
+  {
+    path : "/sign-up",
+    element : <Signup/>
   }
 ]);
 
