@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const MyJobs = () => {
-  const email = "abc@cde.xyz"; // use dynamic email here
+  const email = "abc@cde.xyz"; // @todo use dynamic email here
   const [jobs, setJobs] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [isLoading, setIsLoading] = useState(true);

@@ -11,6 +11,7 @@ const JobDetails = () => {
     useEffect(()=>{
         fetch(`http://localhost:5000/all-jobs/${id}`).then( res => res.json()).then(data => setJob(data))
     },[])
+    // @todo job data is not being fetched from the API here. No route exists for it
 
     const handleApply = async() => {
         const { value: url } = await Swal.fire({
