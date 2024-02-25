@@ -1,0 +1,2 @@
+1. in employerController/postJob _id of user is sent with the body;
+2. 
