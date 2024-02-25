@@ -1,23 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
-  name: 'user',
-  initialState : {
-    user: null
+  name: "user",
+  initialState: {
+    loggedIn: false,
+    token: "", // Add token field
+    user: null, // Store user data here
   },
   reducers: {
-    login(state, actions) {
-      state.user = actions.payload;
-      console.log(state.user)
+    login(state, action) {
+      state.loggedIn = true;
+      state.token = action.payload.token; // Assuming token is part of payload
+      state.user = action.payload.user; // Assuming user data is also part of payload
+      console.log(state.user); // For debugging purposes
     },
-    logout(state){
-      state.user=null;
-    }
+    logout(state) {
+      (state.loggedIn = false), (state.token = "");
+    },
   },
 });
 
-export const { login,logout } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 
-export const selectedUser = (state) => state.user.user
+export const selectedUser = (state) => state.user.user;
 
 export default userSlice.reducer;

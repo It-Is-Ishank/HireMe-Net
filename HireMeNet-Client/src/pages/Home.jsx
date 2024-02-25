@@ -17,13 +17,14 @@ const Home = () => {
   useEffect(() => {
     setIsLoading(true);
     fetch("http://localhost:5000/api/employee/jobs")
-    //fetch("../public/jobs.json")
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);
         setIsLoading(false);
       });
+      console.log(jobs)
   }, []);
+  
 
   //console.log(jobs);
   const [query, setQuery] = useState("");

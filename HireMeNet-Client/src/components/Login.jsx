@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../feature/login/loginSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -22,11 +25,10 @@ const Login = () => {
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden bg-[#fafafa]">
       <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl lg:max-w-xl">
-        <form onSubmit={(e) => handleLogin(e)}>
           <h1 className="text-3xl font-semibold text-center text-blue uppercase">
             Log in
           </h1>
-          <form className="mt-6">
+          <form className="mt-6" onSubmit={(e) => handleLogin(e)}>
             <div className="mb-2">
               <label
                 htmlFor="email"
@@ -101,12 +103,11 @@ const Login = () => {
               </svg>
             </button>
           </div>
-        </form>
 
         <p className="mt-8 text-xs font-light text-center text-gray-700">
           {" "}
           Don't have an account?{" "}
-          <a href="#" className="font-medium text-purple-600 hover:underline">
+          <a onClick={() => navigate("/sign-up")} className="font-medium text-purple-600 hover:underline">
             Sign up
           </a>
         </p>
