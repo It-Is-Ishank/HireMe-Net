@@ -12,7 +12,6 @@ const userSlice = createSlice({
       state.loggedIn = true;
       state.token = action.payload.token; // Assuming token is part of payload
       state.user = action.payload.user; // Assuming user data is also part of payload
-      console.log(state.user); // For debugging purposes
     },
     logout(state) {
       (state.loggedIn = false), (state.token = "");

@@ -7,17 +7,48 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(
-      login({
-        email : email,
-        password : password,
-        loggedIn : true,
-      }));
+
+    try {
+      const response = await fetch("http://localhost:5000/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        // Handle error, show message, etc.
+        console.error("Login failed");
+        return;
+      }
+
+      const data = await response.json();
+
+      // Dispatch the login action with the received token and user data
+      dispatch(
+        login({
+          token: data.token,
+          user: data.user,
+        })
+      );
+
+      alert('login successfull');
+
+      // Navigate to the desired page after successful login
+      navigate("/");
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+
+    // Reset email and password fields
     setEmail("");
     setPassword("");
   };

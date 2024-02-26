@@ -11,4 +11,5 @@ router.get("/all-users", adminController.getAllUsers);
 router.get("/all-jobs", adminController.getAllJobs);
 router.post("/manage-job/:jobId", adminController.manageJob);
 
+
 module.exports = router;

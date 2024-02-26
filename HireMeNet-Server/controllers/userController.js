@@ -66,56 +66,49 @@ exports.SignUp = async (req, res) => {
 
 exports.LogIn = async (req, res) => {
   try {
-    //get all data from frontend
     const { email, password } = req.body;
-    // data validation
 
-    if (!(email && password)) return res.status(400).send("Missing Data");
+    // Data validation...
 
-    //find user from db
     const user = await User.findOne({ email });
     if (!user) return res.status(401).send("Invalid Email");
 
-    // Initialize token variable outside the if block
-
-    //match the password
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign(
         {
           id: user._id,
-          fullName : user.fullName,
-          role : user.role,
+          fullName: user.fullName,
+          role: user.role,
         },
         process.env.TokenKey,
         {
           expiresIn: "3d",
         }
       );
-      
-      // Since user and token are needed outside, make sure they are declared in an accessible scope.
-      // Assuming you've declared let token; at the beginning of the try block.
 
-      //cookie generate
       const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-        httpOnly: true,
+        httpOnly: false, // Adjust based on security requirements
+        sameSite: null,
       };
-      res.status(200).cookie("token", token, options).json({
-        success: true,
-        token,
-        user: {
-          id: user._id,
-          fullName: user.fullName,
-          role: user.role,
-          // You might want to exclude the password even if it's hashed
-        },
-      });
+
+      res
+        .status(200)
+        .cookie("token", token, options)
+        .json({
+          success: true,
+          token,
+          user: {
+            id: user._id,
+            fullName: user.fullName,
+            role: user.role,
+          },
+        });
     } else {
-      // If password does not match
       return res.status(401).send("Invalid Password");
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-}
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
