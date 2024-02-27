@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import CreatableSelect from "react-select/creatable";
 
 const PostJob = () => {
   const [selectedOption, setSelectedOption] = useState(null);
-
+  const user = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
@@ -13,8 +14,9 @@ const PostJob = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    data.userId = user.user.id;
     data.skills = selectedOption;
-    //console.log(data)
+    console.log(data)
     fetch("http://localhost:5000/api/employer/post-job",{
       method:"POST",
       headers:{

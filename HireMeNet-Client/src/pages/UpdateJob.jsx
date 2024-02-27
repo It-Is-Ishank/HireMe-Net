@@ -19,11 +19,12 @@ const UpdateJob = () => {
     companyLogo,
     employmentType,
     description,
-    postedBy,
     skills,
   } = useLoaderData();
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  console.log(skills);
+
+  const [selectedOption, setSelectedOption] = useState(skills);
 
   const {
     register,
@@ -34,8 +35,8 @@ const UpdateJob = () => {
 
   const onSubmit = (data) => {
     data.skills = selectedOption;
-    console.log(data)
-    fetch(`http://localhost:5000/update-job/${id}`, {
+    console.log(data);
+    fetch(`http://localhost:5000/api/employer/update-job/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +50,7 @@ const UpdateJob = () => {
           alert("job Updated Successfully");
         }
         reset();
-      });    
+      });
   };
 
   const options = [
@@ -169,7 +170,7 @@ const UpdateJob = () => {
             <CreatableSelect
               defaultValue={skills}
               onChange={setSelectedOption}
-              options={options}
+              options={selectedOption}
               isMulti
               className="create-job-input py-4"
             />
@@ -209,17 +210,6 @@ const UpdateJob = () => {
               rows={6}
               placeholder="Enter the job description here "
               {...register("description")}
-            />
-          </div>
-
-          <div className=" w-full">
-            <label className="block mb-2 text-lg">Job Posted By</label>
-            <input
-              type="text"
-              defaultValue={postedBy}
-              placeholder="Enter your email"
-              {...register("postedBy")}
-              className="create-job-input"
             />
           </div>
 

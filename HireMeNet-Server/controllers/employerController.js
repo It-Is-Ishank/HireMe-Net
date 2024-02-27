@@ -15,6 +15,7 @@ exports.postJob = async (req, res) => {
     experienceLevel,
     employmentType,
     description,
+    skills
   } = req.body;
 
   try {
@@ -22,8 +23,8 @@ exports.postJob = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
-      
     }
+
     // Create a new job
     const newJob = new Job({
       companyName,
@@ -36,15 +37,15 @@ exports.postJob = async (req, res) => {
       experienceLevel,
       employmentType,
       description,
+      skills,
       postedBy: userId,
-      applicants: [], // applicants array 
+      applicants: [],
     });
 
     // Save the job
     await newJob.save();
 
     // Update the employer's jobsPosted array
-
     user.jobsPosted.push(newJob._id);
     await user.save();
 
@@ -56,8 +57,8 @@ exports.postJob = async (req, res) => {
 };
 
 exports.getEmployerJobs = async (req, res) => {
-  const userId = req.body._id;
-  console.log(userId);
+  const userId = req.params.id;
+
   try {
     // Find jobs posted by the employer
     const jobs = await Job.find({ postedBy: userId });
@@ -67,9 +68,23 @@ exports.getEmployerJobs = async (req, res) => {
   }
 };
 
+exports.getSingleJob = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const job = await Job.findById(id);
+    console.log(job)
+    //res.json(job);
+    res.send(job)
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 exports.updateJob = async (req, res) => {
-  const jobId= req.params;
+  const jobId = req.params.id; // Corrected
   const updatedData = req.body;
+  const userId = req.body.userId; // Add this line
 
   try {
     // Check if the job exists

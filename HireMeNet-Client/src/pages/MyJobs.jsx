@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const MyJobs = () => {
-  const email = "abc@cde.xyz"; // use dynamic email here
+  const user = useSelector((state) => state.user);
   const [jobs, setJobs] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -11,11 +12,9 @@ const MyJobs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 4;
 
-
-
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:5000/myJobs/${email}`)
+    fetch(`http://localhost:5000/api/employer/my-jobs/${user.user.id}`)
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);
@@ -30,16 +29,16 @@ const MyJobs = () => {
   const currentJobs = jobs.slice(indexOfFirstItem, indexOfLastItem);
 
   const nextPage = () => {
-    if(indexOfLastItem < jobs.length){
+    if (indexOfLastItem < jobs.length) {
       setCurrentPage(currentPage + 1);
     }
-  }
+  };
 
   const prevPage = () => {
-    if(currentPage >1){
-      setCurrentPage(currentPage -1);
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
-  }
+  };
 
   const handleSearch = () => {
     const filter = jobs.filter(
@@ -139,9 +138,16 @@ const MyJobs = () => {
                   </tr>
                 </thead>
                 {isLoading ? (
-                  <div className="flex items-center justify-center h-20">
-                    <p>Loading...</p>
-                  </div>
+                  <tbody  >
+                    <tr>
+                      <td
+                        colSpan="6"
+                        className="flex items-center justify-center h-20"
+                      >
+                        <p>Loading...</p>
+                      </td>
+                    </tr>
+                  </tbody>
                 ) : (
                   <tbody>
                     {currentJobs.map((job, index) => (
@@ -160,7 +166,7 @@ const MyJobs = () => {
                         </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <button>
-                            <Link to={`/edit-job/${job?._id}`}>Edit</Link>
+                            <Link to={`/edit-job/${job._id}`}>Edit</Link>
                           </button>
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -182,14 +188,17 @@ const MyJobs = () => {
         {/* pagination  */}
 
         <div className="flex justify-center text-black space-x-8">
-          {
-            currentPage>1  && 
-            (<button className="hover:underline" onClick={prevPage}> Previous</button>)
-          }
-          {
-            indexOfLastItem < jobs.length && 
-            (<button className="hover:underline" onClick={nextPage}>Next</button>)
-          }
+          {currentPage > 1 && (
+            <button className="hover:underline" onClick={prevPage}>
+              {" "}
+              Previous
+            </button>
+          )}
+          {indexOfLastItem < jobs.length && (
+            <button className="hover:underline" onClick={nextPage}>
+              Next
+            </button>
+          )}
         </div>
       </section>
     </div>
