@@ -13,7 +13,7 @@ const jobSchema = new mongoose.Schema(
     experienceLevel: { type: String, required: true },
     employmentType: { type: String, required: true },
     description: { type: String, required: true },
-    skills: [{ value: { type: String }, label: { type: String } }],
+    skills: [{ value: { type: String }, label: { type: String } }, { _id: false }],
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
