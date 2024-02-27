@@ -9,7 +9,7 @@ const JobDetails = () => {
     const [job, setJob] = useState([])
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/all-jobs/${id}`).then( res => res.json()).then(data => setJob(data))
+        fetch(`http://localhost:8080/all-jobs/${id}`).then( res => res.json()).then(data => setJob(data))
     },[])
 
     const handleApply = async() => {

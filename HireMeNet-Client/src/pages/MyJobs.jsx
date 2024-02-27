@@ -14,7 +14,7 @@ const MyJobs = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:5000/api/employer/my-jobs/${user.user.id}`)
+    fetch(`http://localhost:8080/api/employer/my-jobs/${user.user.id}`)
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);
@@ -50,7 +50,7 @@ const MyJobs = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/job/${id}`, {
+    fetch(`http://localhost:8080/job/${id}`, {
       method: "DELETE",
     })
       .then((res) => {

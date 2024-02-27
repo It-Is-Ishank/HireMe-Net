@@ -16,23 +16,30 @@ const PostJob = () => {
   const onSubmit = (data) => {
     data.userId = user.user.id;
     data.skills = selectedOption;
-    console.log(data)
-    fetch("http://localhost:5000/api/employer/post-job",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+  
+    fetch("http://localhost:8080/api/employer/post-job", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify(data)
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
-        if(result.acknowledged === true){
-          alert("job posted Successfully");
+        if (result.message === "Job posted successfully") {
+          alert("Job posted Successfully");
+          reset();
+        } else {
+          alert("Failed to post job. Please try again later.");
         }
-        reset();
+      })
+      .catch((error) => {
+        console.error("Error during fetch:", error);
+        alert("Failed to post job. Please check your internet connection and try again.");
       });
   };
+  
 
   const options = [
     { value: "JavaScript", label: "JavaScript" },

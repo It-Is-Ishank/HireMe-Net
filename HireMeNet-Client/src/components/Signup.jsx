@@ -57,7 +57,7 @@ const Signup = () => {
       return;
     }
 
-    fetch("http://localhost:5000/api/user/sign-up", {
+    fetch("http://localhost:8080/api/user/sign-up", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

@@ -16,7 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:5000/api/employee/jobs")
+    fetch("http://localhost:8080/api/employee/jobs") // changed port number old port was 8080
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);
