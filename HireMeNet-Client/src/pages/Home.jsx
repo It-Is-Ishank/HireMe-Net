@@ -69,7 +69,7 @@ const Home = () => {
   // main function
 
   const filteredData = (jobs, selected, query) => {
-    const filteredJobs = jobs;
+    let filteredJobs = jobs;
     // filtering input items
     if (query) {
       filteredJobs = filteredItems;
@@ -103,7 +103,7 @@ const Home = () => {
     // slice the data base of current page
     const { startIndex, endIndex } = calculatePageRange();
 
-    filteredJobs = Array.isArray(fileteredJobs) ? filteredJobs.slice(startIndex, endIndex): [];
+    filteredJobs = filteredJobs.slice(startIndex, endIndex);
 
     return filteredJobs.map((data, i) => <Card key={i} data={data} />);
   };

@@ -37,22 +37,22 @@ exports.SignUp = async (req, res) => {
       role,
     });
 
-    // const token = jwt.sign(
-    //   {
-    //     id: user._id,
-    //     fullName,
-    //     role,
-    //     email,
-    //   },
-    //   process.env.TokenKey,
-    //   {
-    //     expiresIn: "3d",
-    //   }
-    // );
+    const token = jwt.sign(
+      {
+        id: user._id,
+        fullName,
+        role,
+        email,
+      },
+      process.env.TokenKey,
+      {
+        expiresIn: "3d",
+      }
+    );
 
-    // user.token = token;
+    user.token = token;
 
-    // await user.save();
+    await user.save();
 
     res.json({
       acknowledged: true,
@@ -74,22 +74,13 @@ exports.LogIn = async (req, res) => {
     if (!user) return res.status(401).send("Invalid Email");
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign(
-        {
-          id: user._id,
-          fullName: user.fullName,
-          role: user.role,
-        },
-        process.env.TokenKey,
-        {
-          expiresIn: "3d",
-        }
-      );
+      const token = user.token;
 
       const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-        httpOnly: false, // Adjust based on security requirements
-        sameSite: null,
+        secure : true,
+        httpOnly: true, // Set to true for added security
+        sameSite: "None", // Adjust based on security requirements
       };
 
       res
