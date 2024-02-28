@@ -15,7 +15,7 @@ exports.postJob = async (req, res) => {
     experienceLevel,
     employmentType,
     description,
-    skills
+    skills,
   } = req.body;
 
   try {
@@ -73,13 +73,13 @@ exports.getSingleJob = async (req, res) => {
 
   try {
     const job = await Job.findById(id);
-    console.log(job)
+    console.log(job);
     //res.json(job);
-    res.send(job)
+    res.send(job);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
-}
+};
 
 exports.updateJob = async (req, res) => {
   const jobId = req.params.id; // Corrected
@@ -95,7 +95,9 @@ exports.updateJob = async (req, res) => {
 
     // Check if the user is the owner of the job
     if (job.postedBy.toString() !== userId) {
-      return res.status(403).json({ error: "Unauthorized. You are not the owner of this job." });
+      return res
+        .status(403)
+        .json({ error: "Unauthorized. You are not the owner of this job." });
     }
 
     // Update the job with the provided data
@@ -105,6 +107,53 @@ exports.updateJob = async (req, res) => {
     await job.save();
 
     res.json({ message: "Job updated successfully" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.deleteJob = async (req, res) => {
+  const jobId = req.params.id;
+
+  try {
+    // Find the job to be deleted
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+      return res.status(404).json({ error: "Job not found" });
+    }
+
+    const userId = job.postedBy.toString();
+
+    // Check if the user is the owner of the job
+    if (userId !== req.body.userId) {
+      return res
+        .status(403)
+        .json({ error: "Unauthorized. You are not the owner of this job." });
+    }
+
+    // Remove the job from the user's jobsPosted array
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.jobsPosted = user.jobsPosted.filter(
+      (jobId) => jobId.toString() !== job._id.toString()
+    );
+
+    // Save the updated user
+    await user.save();
+
+    // Delete the job
+    const newJobs = await Job.deleteOne({ _id: jobId });
+
+    res.json({
+      message: "Job deleted successfully",
+      jobs: newJobs,
+      status: true,
+    });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal Server Error" });

@@ -14,14 +14,16 @@ const MyJobs = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:8080/api/employer/my-jobs/${user.user.id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setJobs(data);
-        setIsLoading(false);
-      });
-  }, []);
 
+    (async () => {
+      await fetch(`http://localhost:8080/api/employer/my-jobs/${user.user.id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setJobs(data);
+        });
+    })();
+    setIsLoading(false);
+  }, []);
   // pagination
 
   const indexOfLastItem = currentPage * resultsPerPage;
@@ -49,9 +51,14 @@ const MyJobs = () => {
     setIsLoading(false);
   };
 
-  const handleDelete = (id) => {
-    fetch(`http://localhost:8080/job/${id}`, {
+  const handleDelete = async (id) => {
+    const userId = user.user.id;
+    await fetch(`http://localhost:8080/api/employer/delete-job/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }), // Include userId in the request body
     })
       .then((res) => {
         if (!res.ok) {
@@ -60,13 +67,16 @@ const MyJobs = () => {
         return res.json();
       })
       .then((data) => {
-        if (data.acknowledged === true) {
+        console.log(data);
+        setJobs(data?.jobs);
+        if (data?.status === true) {
           alert("Deleted Successfully!!");
         }
       })
       .catch((error) => {
         console.error("Error during DELETE request:", error);
       });
+    setIsLoading(false);
   };
 
   return (
@@ -138,7 +148,7 @@ const MyJobs = () => {
                   </tr>
                 </thead>
                 {isLoading ? (
-                  <tbody  >
+                  <tbody>
                     <tr>
                       <td
                         colSpan="6"
