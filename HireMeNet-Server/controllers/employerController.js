@@ -84,7 +84,9 @@ exports.getSingleJob = async (req, res) => {
 exports.updateJob = async (req, res) => {
   const jobId = req.params.id; // Corrected
   const updatedData = req.body;
-  const userId = req.body.userId; // Add this line
+  const userId = req.body.loggedIn; // Add this line
+
+  console.log(updatedData);
 
   try {
     // Check if the job exists
@@ -100,6 +102,7 @@ exports.updateJob = async (req, res) => {
         .json({ error: "Unauthorized. You are not the owner of this job." });
     }
 
+    delete updatedData.loggedIn;
     // Update the job with the provided data
     Object.assign(job, updatedData);
 

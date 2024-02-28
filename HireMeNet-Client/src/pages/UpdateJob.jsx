@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { useLoaderData, useParams } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 
 const UpdateJob = () => {
   const { id } = useParams();
+  const user = useSelector((state) => state.user);
 
   const {
     _id,
@@ -22,7 +24,7 @@ const UpdateJob = () => {
     skills,
   } = useLoaderData();
 
-  console.log(skills);
+  //console.log(skills);
 
   const [selectedOption, setSelectedOption] = useState(skills);
 
@@ -35,7 +37,9 @@ const UpdateJob = () => {
 
   const onSubmit = (data) => {
     data.skills = selectedOption;
+    data.loggedIn = user.user.id.toString();
     console.log(data);
+
     fetch(`http://localhost:8080/api/employer/update-job/${id}`, {
       method: "PATCH",
       headers: {
@@ -43,13 +47,18 @@ const UpdateJob = () => {
       },
       body: JSON.stringify(data),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res); // Log the response
+        return res.json();
+      })
       .then((result) => {
         console.log(result);
         if (result.acknowledged === true) {
           alert("job Updated Successfully");
         }
-        reset();
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
       });
   };
 

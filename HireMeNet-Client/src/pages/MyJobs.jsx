@@ -28,7 +28,7 @@ const MyJobs = () => {
 
   const indexOfLastItem = currentPage * resultsPerPage;
   const indexOfFirstItem = indexOfLastItem - resultsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstItem, indexOfLastItem);
+  const currentJobs = Array.isArray(jobs) ? jobs.slice(indexOfFirstItem, indexOfLastItem): [];
 
   const nextPage = () => {
     if (indexOfLastItem < jobs.length) {
