@@ -24,7 +24,7 @@ const UpdateJob = () => {
     skills,
   } = useLoaderData();
 
-  //console.log(skills);
+  console.log(skills);
 
   const [selectedOption, setSelectedOption] = useState(skills);
 
@@ -37,7 +37,7 @@ const UpdateJob = () => {
 
   const onSubmit = (data) => {
     data.skills = selectedOption;
-    data.loggedIn = user.user.id.toString();
+    data.loggedIn = user.data.user._id.toString();
     console.log(data);
 
     fetch(`http://localhost:8080/api/employer/update-job/${id}`, {
@@ -179,9 +179,10 @@ const UpdateJob = () => {
             <CreatableSelect
               defaultValue={skills}
               onChange={setSelectedOption}
-              options={selectedOption}
+              options={options}
               isMulti
               className="create-job-input py-4"
+              formatCreateLabel={(inputValue) => `Add "${inputValue}"`}
             />
           </div>
 

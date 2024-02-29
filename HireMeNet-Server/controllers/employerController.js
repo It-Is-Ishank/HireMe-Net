@@ -109,7 +109,11 @@ exports.updateJob = async (req, res) => {
     // Save the updated job
     await job.save();
 
-    res.json({ message: "Job updated successfully" });
+    res.json({ 
+      message: "Job updated successfully",
+      acknowledged : true
+            
+  });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal Server Error" });

@@ -33,7 +33,8 @@ const Login = () => {
       // Dispatch the login action with the received token and user data
       dispatch(
         login({
-          user: data.user,
+          //user: data.user,
+          data : data.data
         })
       );
 

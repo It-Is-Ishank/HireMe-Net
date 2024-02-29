@@ -8,6 +8,7 @@ const employeeController = require('../controllers/employeeController');
 
 // Your protected routes
 router.get('/jobs', employeeController.getJobs);
+router.get('/job/:id',employeeController.getSingleJob);
 router.post('/apply/:jobId', employeeController.applyForJob);
 router.get('/applied-jobs', employeeController.getAppliedJobs);
 

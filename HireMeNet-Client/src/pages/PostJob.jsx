@@ -5,7 +5,7 @@ import CreatableSelect from "react-select/creatable";
 
 const PostJob = () => {
   const [selectedOption, setSelectedOption] = useState(null);
-  const user = useSelector((state) => state.user);
+  const reduxData = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
@@ -14,7 +14,8 @@ const PostJob = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    data.userId = user.user.id;
+    console.log(reduxData);
+    data.userId = reduxData.data.user._id;
     data.skills = selectedOption;
   
     fetch("http://localhost:8080/api/employer/post-job", {
@@ -46,7 +47,6 @@ const PostJob = () => {
     { value: "C++", label: "C++" },
     { value: "React", label: "React" },
     { value: "Java", label: "Java" },
-    { value: "JavaScript", label: "JavaScript" },
     { value: "Redux", label: "Redux" },
     { value: "MongoDB", label: "MongoDB" },
   ];
@@ -153,6 +153,7 @@ const PostJob = () => {
               options={options}
               isMulti
               className="create-job-input py-4"
+              formatCreateLabel={(inputValue) => `Add "${inputValue}"`}
             />
           </div>
 

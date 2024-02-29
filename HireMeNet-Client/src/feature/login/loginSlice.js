@@ -4,16 +4,16 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     loggedIn: false,
-    user: null, // Store user data here
+    data: null, // Store user data here
   },
   reducers: {
     login(state, action) {
       state.loggedIn = true;
-      state.user = action.payload.user; // Assuming user data is also part of payload
+      state.data = action.payload.data; // Assuming user data is also part of payload
     },
     logout(state) {
       state.loggedIn = false;
-      state.user = null;
+      state.data = null;
     },
   },
 });

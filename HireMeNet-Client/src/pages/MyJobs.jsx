@@ -16,7 +16,7 @@ const MyJobs = () => {
     setIsLoading(true);
 
     (async () => {
-      await fetch(`http://localhost:8080/api/employer/my-jobs/${user.user.id}`)
+      await fetch(`http://localhost:8080/api/employer/my-jobs/${user.data.user._id}`)
         .then((res) => res.json())
         .then((data) => {
           setJobs(data);
@@ -52,7 +52,7 @@ const MyJobs = () => {
   };
 
   const handleDelete = async (id) => {
-    const userId = user.user.id;
+    const userId = user.data.user._id;
     await fetch(`http://localhost:8080/api/employer/delete-job/${id}`, {
       method: "DELETE",
       headers: {

@@ -32,6 +32,21 @@ exports.applyForJob = async (req, res) => {
     }
 };
 
+exports.getSingleJob = async (req,res) => {
+    const jobId = req.params.id;
+    try{
+        const job = await Job.findById(jobId);
+        if(!job){
+            return res.status(404).json({message:"No job found with that ID"});
+        }
+        res.send(job);
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message:"Server error"})
+    }
+}
+
 exports.getAppliedJobs = async (req, res) => {
     const { userId } = req.user;
     

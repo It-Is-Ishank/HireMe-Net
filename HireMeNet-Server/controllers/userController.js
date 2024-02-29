@@ -37,20 +37,20 @@ exports.SignUp = async (req, res) => {
       role,
     });
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        fullName,
-        role,
-        email,
-      },
-      process.env.TokenKey,
-      {
-        expiresIn: "3d",
-      }
-    );
+    // const token = jwt.sign(
+    //   {
+    //     id: user._id,
+    //     fullName,
+    //     role,
+    //     email,
+    //   },
+    //   process.env.TokenKey,
+    //   {
+    //     expiresIn: "3d",
+    //   }
+    // );
 
-    user.token = token;
+    // user.token = token;
 
     await user.save();
 
@@ -73,33 +73,56 @@ exports.LogIn = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(401).send("Invalid Email");
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      const token = user.token;
+    const isPassValid = await user.comparePassword(password);
 
-      const options = {
-        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-        secure : true,
-        httpOnly: true, // Set to true for added security
-        sameSite: "None", // Adjust based on security requirements
-      };
-
-      res
-        .status(200)
-        .cookie("token", token, options)
-        .json({
-          success: true,
-          token,
-          user: {
-            id: user._id,
-            fullName: user.fullName,
-            role: user.role,
-          },
-        });
-    } else {
+    if (!isPassValid) {
       return res.status(401).send("Invalid Password");
     }
+
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
+    //const token = user.token; old method
+
+    const options = {
+      secure: true,
+      httpOnly: true, // Set to true for added security
+    };
+
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", refreshToken, options)
+      .json({
+        success: true,
+        data: {
+          user,
+          accessToken,
+          refreshToken,
+        },
+        message: "Login Successfull",
+      });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+// .json(
+//   new ApiResponse(
+//     200,
+//     {
+//       loggedInUser,
+//       accessToken,
+//       refreshToken,
+//     },
+//     "User logged In successfully"
+//   )
+// );
+// class ApiResponse{
+//   constructor(statusCode, data, message="ok"){
+//       this.statusCode=statusCode
+//       this.data=data
+//       this.message=message
+//       this.success=statusCode<400 // ok status range (100-399)
+//   }
+// }
