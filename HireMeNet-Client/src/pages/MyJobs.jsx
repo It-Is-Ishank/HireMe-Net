@@ -6,6 +6,7 @@ const MyJobs = () => {
   const user = useSelector((state) => state.user);
   const [jobs, setJobs] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [filteredJobs, setFilteredJobs] = useState([]); // New state for filtered jobs
   const [isLoading, setIsLoading] = useState(true);
 
   // set current page
@@ -16,7 +17,9 @@ const MyJobs = () => {
     setIsLoading(true);
 
     (async () => {
-      await fetch(`http://localhost:8080/api/employer/my-jobs/${user.data.user._id}`)
+      await fetch(
+        `http://localhost:8080/api/employer/my-jobs/${user.data.user._id}`
+      )
         .then((res) => res.json())
         .then((data) => {
           setJobs(data);
@@ -24,11 +27,24 @@ const MyJobs = () => {
     })();
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    // Update filtered jobs when the search text changes
+    const filter = jobs.filter(
+      (job) =>
+        job.jobTitle.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
+    );
+    setFilteredJobs(filter);
+    setIsLoading(false);
+  }, [searchText, jobs]);
+
   // pagination
 
   const indexOfLastItem = currentPage * resultsPerPage;
   const indexOfFirstItem = indexOfLastItem - resultsPerPage;
-  const currentJobs = Array.isArray(jobs) ? jobs.slice(indexOfFirstItem, indexOfLastItem): [];
+  const currentJobs = Array.isArray(filteredJobs)
+    ? filteredJobs.slice(indexOfFirstItem, indexOfLastItem)
+    : [];
 
   const nextPage = () => {
     if (indexOfLastItem < jobs.length) {
