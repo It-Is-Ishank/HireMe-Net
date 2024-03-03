@@ -40,7 +40,7 @@ const UpdateJob = () => {
     data.loggedIn = user.data.user._id.toString();
     console.log(data);
 
-    fetch(`http://localhost:8080/api/employer/update-job/${id}`, {
+    fetch(`/api/employer/update-job/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

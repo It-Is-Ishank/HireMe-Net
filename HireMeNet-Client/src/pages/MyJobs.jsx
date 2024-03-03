@@ -18,7 +18,7 @@ const MyJobs = () => {
 
     (async () => {
       await fetch(
-        `http://localhost:8080/api/employer/my-jobs/${user.data.user._id}`
+        `/api/employer/my-jobs/${user.data.user._id}`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -30,6 +30,7 @@ const MyJobs = () => {
 
   useEffect(() => {
     // Update filtered jobs when the search text changes
+    setIsLoading(true);
     const filter = jobs.filter(
       (job) =>
         job.jobTitle.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
@@ -69,7 +70,7 @@ const MyJobs = () => {
 
   const handleDelete = async (id) => {
     const userId = user.data.user._id;
-    await fetch(`http://localhost:8080/api/employer/delete-job/${id}`, {
+    await fetch(`/api/employer/delete-job/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

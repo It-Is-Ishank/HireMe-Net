@@ -18,7 +18,7 @@ const PostJob = () => {
     data.userId = reduxData.data.user._id;
     data.skills = selectedOption;
   
-    fetch("http://localhost:8080/api/employer/post-job", {
+    fetch("/api/employer/post-job", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
