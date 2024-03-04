@@ -49,13 +49,11 @@ const JobDetails = () => {
             <button className="bg-blue px-8 py-3 text-white rounded" onClick={handleApply}>
                 Apply Now
             </button>
-
-            <div className="flex flex-row-reverse justify-between">
+            <div className="flex flex-row">
                 <div className="my-6">
                     <h2 className="text-2xl font-bold">Job Description</h2>
-                    <p className="text-lg w-[600px]">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi asperiores voluptatibus, porro corrupti numquam illum repudiandae aliquam at amet praesentium commodi ullam, vero quisquam alias impedit eaque excepturi soluta repellat. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias totam saepe pariatur, voluptatem ut laudantium reprehenderit veritatis itaque incidunt illo sed obcaecati tempore odit enim ipsam! Animi rerum sequi velit.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ipsam, sapiente laboriosam voluptates iure quia voluptate ut, inventore sint explicabo veniam ad corrupti optio, molestias accusamus. Doloribus iste harum eos.
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit reprehenderit dolorum minus eos alias quod maxime dolor voluptatibus, quo, earum cumque placeat delectus quidem minima amet unde animi blanditiis nisi?
+                    <p className="text-lg w-[600px]">
+                        { job.description }
                     </p>
                 </div>
             </div>
