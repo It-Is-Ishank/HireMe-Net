@@ -43,7 +43,6 @@ const JobDetails = () => {
                         <div className='mx-4'><strong><FontAwesomeIcon icon={faAddressCard} className='text-center' /></strong> {job.employmentType}</div>
                         <div className='mx-4'><strong><FontAwesomeIcon icon={faSackDollar} className='text-center' /></strong> ${job.minPrice} - ${job.maxPrice} {job.salaryType}</div>
                         <div className='mx-4'><strong><FontAwesomeIcon icon={faCalendar} className='text-center' /></strong> {moment(job.postingDate).format('YYYY-MM-DD')}</div>
-                        { console.log(job.postingDate) }
                 </div>
             </div>
             <button className="bg-blue px-8 py-3 text-white rounded" onClick={handleApply}>
