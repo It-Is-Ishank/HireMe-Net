@@ -19,7 +19,12 @@ const jobSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    applicants: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+    applicants: [
+      {
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        resumeUrl: { type: String },
+      },
+    ],
   },
   { versionKey: false }
 );

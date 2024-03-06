@@ -12,13 +12,15 @@ exports.getJobs = async (req, res) => {
 };
 
 exports.applyForJob = async (req, res) => {
-    const { userId } = req._id;
-    const { jobId } = req.params._id;
+    console.log(req.body);
+    const userId = req.body.userId;
+    const url = req.body.resumeUrl;
+    const jobId = req.params.id;
 
     try {
         // Find the job and update the applicants array
         const job = await Job.findById(jobId);
-        job.applicants.push(userId);
+        job.applicants.push({userId : userId,resumeUrl : url});
         await job.save();
 
         // Update the employee's jobsApplied array
@@ -28,6 +30,7 @@ exports.applyForJob = async (req, res) => {
 
         res.json({ message: 'Applied for the job successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
