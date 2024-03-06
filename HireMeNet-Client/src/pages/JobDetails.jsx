@@ -25,6 +25,8 @@ const JobDetails = () => {
                 Swal.fire(`Entered URL: ${url}`);
             }
     }
+    /** @todo Add in hyperlinks to all categories like location/job type etc., to apply for jobs with that category.
+     * Possibly linked to the main home page in some way? */
     return (
         <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4 my-8">
             <PageHeader title="Job Details" path="job-data" />
@@ -32,8 +34,7 @@ const JobDetails = () => {
                 <div className="flex items-center mb-6">
                     <img src={job.companyLogo} alt={job.companyName} className="h-16 w-16 mr-4" />
                     <div>
-                        <h1 className="text-4xl font-bold">{job.jobTitle}</h1>
-                        <p className="text-xl text-gray-500">{job.companyName}</p>
+                        <span className="text-2xl font-bold">{job.jobTitle}</span><span className="text-xl text-blue">@{job.companyName}</span>
                     </div>
                 </div>
                 <div className="my-6 flex flex-row justify-between">
@@ -51,7 +52,7 @@ const JobDetails = () => {
             <div className="flex flex-row">
                 <div className="my-6">
                     <h2 className="text-2xl font-bold">Job Description</h2>
-                    <p className="text-lg w-[600px]">
+                    <p className="text-lg">
                         { job.description }
                     </p>
                 </div>
