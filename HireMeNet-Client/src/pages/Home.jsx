@@ -5,7 +5,6 @@ import Card from "../components/Card";
 import Sidebar from "../sidebar/Sidebar";
 import Newsletter from "../components/Newsletter";
 
-
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [jobs, setJobs] = useState([]);
@@ -22,9 +21,8 @@ const Home = () => {
         setJobs(data);
         setIsLoading(false);
       });
-      console.log(jobs)
+    console.log(jobs);
   }, []);
-  
 
   //console.log(jobs);
   const [query, setQuery] = useState("");
@@ -70,41 +68,41 @@ const Home = () => {
 
   const filteredData = (jobs, selected, query) => {
     let filteredJobs = jobs;
+    console.log(`Selected: ${selected}`);
     // filtering input items
     if (query) {
+      console.log(`Query: ${query}`);
       filteredJobs = filteredItems;
     }
-    // category filter
     if (selected) {
+      /** @todo fix the filtering mechanism for jobs. seems to be acting on erraneous values
+       * instead of actually filtering correctly. */
       filteredJobs = filteredJobs.filter(
-        ({
-          jobLocation,
-          minSalary,
-          maxPrice,
-          experienceLevel,
-          salaryType,
-          employementType,
-          postingDate,
-        }) =>
-          (jobLocation &&
-            jobLocation.toLowerCase() === selected.toLowerCase()) ||
-          (maxPrice && parseInt(maxPrice) <= parseInt(selected)) ||
-          (salaryType && salaryType.toLowerCase() === selected.toLowerCase()) ||
-          (minSalary && minSalary.toLowerCase() === selected.toLowerCase()) ||
-          postingDate >= selected ||
-          (
-              employementType &&
-                employementType.toLowerCase() === selected.toLowerCase()
-            )
+        (job) =>
+          job.jobLocation && job.jobLocation.toLowerCase() === selected.toLowerCase() ||
+          (new Date(job.postingDate).getTime() >= new Date(selected).getTime()) 
       );
-      console.log(filteredJobs);
+      // filteredJobs = filteredJobs.filter(
+      //   ({
+      //     jobLocation,
+      //     minSalary,
+      //     maxPrice,
+      //     experienceLevel,
+      //     salaryType,
+      //     employementType,
+      //   }) =>
+      //     (jobLocation &&
+      //       jobLocation.toLowerCase() == selected.toLowerCase()) ||
+      //     (maxPrice && parseInt(maxPrice) <= parseInt(selected)) ||
+      //     (salaryType && salaryType.toLowerCase() === selected.toLowerCase()) ||
+      //     (minSalary && minSalary.toLowerCase() === selected.toLowerCase()) ||
+      //     (employementType &&
+      //       employementType.toLowerCase() === selected.toLowerCase())
+      // );
     }
-
     // slice the data base of current page
     const { startIndex, endIndex } = calculatePageRange();
-
     filteredJobs = filteredJobs.slice(startIndex, endIndex);
-
     return filteredJobs.map((data, i) => <Card key={i} data={data} />);
   };
 
@@ -162,7 +160,7 @@ const Home = () => {
 
         {/* right part */}
         <div className="bg-white p-4 rounded">
-            <Newsletter/>
+          <Newsletter />
         </div>
       </div>
     </div>
