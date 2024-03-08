@@ -16,12 +16,37 @@ const Navbar = () => {
 
   const user = useSelector((state) => state.user);
 
-  const navItem = [
-    { path: "/", title: "Start a search" },
-    { path: "/my-job", title: "My Jobs" },
-    { path: "/salary", title: "Estimated Salary" },
-    { path: "/post-job", title: "Post A Job" },
-  ];
+  let navItem;
+  if (user?.data?.user?.role === "employee") {
+    navItem = [
+      { path: "/", title: "Start a search" },
+      { path: "/my-applied-jobs", title: "Applied Jobs" },
+      { path: "/salary", title: "Estimated Salary" },
+    ];
+  } else if (user?.data?.user?.role === "employer") {
+    navItem = [
+      { path: "/", title: "Start a search" },
+      { path: "/my-job", title: "My Jobs" },
+      { path: "/salary", title: "Estimated Salary" },
+      { path: "/post-job", title: "Post A Job" },
+    ];
+  } else if (user?.data?.user?.role === "admin") {
+    navItem = [
+      { path: "/", title: "Start a search" },
+      { path: "/users", title: "User" },
+      { path: "/salary", title: "Estimated Salary" },
+      { path: "/jobs", title: "All jobs" },
+    ];
+  } else {
+    // Default navigation items when no user is logged in
+    navItem = [
+      { path: "/", title: "Home" },
+      { path: "/about", title: "About" },
+      { path: "/contact", title: "Contact" },
+    ];
+  }
+
+  
 
   const handleSignOut = () => {
     console.log("Logging out...");

@@ -9,6 +9,7 @@ import UpdateJob from "../pages/UpdateJob";
 import Login from "../components/Login";
 import JobDetails from "../pages/JobDetails";
 import Signup from "../components/Signup";
+import AppliedJobs from "../pages/AppliedJobs";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         {
           path : "/job/:id",
           element : <JobDetails/>
+        },
+        {
+          path : "/my-applied-jobs",
+          element : <AppliedJobs/>
         }
     ]
   },
@@ -53,7 +58,8 @@ const router = createBrowserRouter([
   {
     path : "/sign-up",
     element : <Signup/>
-  }
+  },
+  
 ]);
 
 export default router;

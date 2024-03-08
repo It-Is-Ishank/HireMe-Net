@@ -10,6 +10,6 @@ const employeeController = require('../controllers/employeeController');
 router.get('/jobs', employeeController.getJobs);
 router.get('/job/:id',employeeController.getSingleJob);
 router.post('/apply/:id', employeeController.applyForJob);
-router.get('/applied-jobs', employeeController.getAppliedJobs);
+router.get('/applied-jobs/:id', employeeController.getAppliedJobs);
 
 module.exports = router;

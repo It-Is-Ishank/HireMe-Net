@@ -13,7 +13,10 @@ const jobSchema = new mongoose.Schema(
     experienceLevel: { type: String, required: true },
     employmentType: { type: String, required: true },
     description: { type: String, required: true },
-    skills: [{ value: { type: String }, label: { type: String } }, { _id: false }],
+    skills: [
+      { value: { type: String }, label: { type: String } },
+      { _id: false },
+    ],
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -23,6 +26,11 @@ const jobSchema = new mongoose.Schema(
       {
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         resumeUrl: { type: String },
+        applicationDate: { type: Date },
+        applicationStatus: {
+          type: String,
+          enum: ["inProgress", "rejected", "approved"],
+        },
       },
     ],
   },

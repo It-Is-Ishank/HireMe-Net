@@ -17,6 +17,7 @@ const JobDetails = () => {
   const { id } = useParams();
   const [job, setJob] = useState([]);
   const reduxData = useSelector((state) => state.user);
+  console.log(reduxData);
 
   useEffect(() => {
     fetch(`/api/employee/job/${id}`)
@@ -34,25 +35,54 @@ const JobDetails = () => {
       });
 
       if (url) {
-        const userId = reduxData.data.user._id; // Replace with the actual user ID
+        const userId = reduxData.data.user._id;
 
-        // Send the user's application data to the backend
-        const response = await fetch(`/api/employee/apply/${id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId,
-            resumeUrl: url,
-          }),
-        });
+        try {
+          // Send the user's application data to the backend
+          const response = await fetch(`/api/employee/apply/${id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId,
+              resumeUrl: url,
+            }),
+          });
 
-        if (response.ok) {
-          // Application added successfully
-          Swal.fire(`You have applied for the job. Resume URL: ${url}`);
-        } else {
-          // Handle error scenario
+          const responseData = await response.json();
+          console.log("Response Data from Backend:", responseData);
+
+          if (response.ok) {
+            if (responseData.message.includes("successfully")) {
+              // Application added successfully
+              Swal.fire({
+                icon: "success", // FontAwesome class for success (check-circle)
+                title: "Applied Successfully",
+                text: `You have applied for the job. Resume URL: ${url}`,
+              });
+            } else {
+              // Handle other scenarios
+              Swal.fire("Error applying for the job. Please try again later.");
+            }
+          } else {
+            // Handle other error scenarios
+            if (
+              responseData.error &&
+              responseData.error.includes("already applied")
+            ) {
+              // User has already applied for this job
+              Swal.fire({
+                icon: "warning",
+                title: "Already Applied",
+                text: "You have already applied for this job.",
+              });
+            } else {
+              Swal.fire("Error applying for the job. Please try again later.");
+            }
+          }
+        } catch (error) {
+          console.error("Error in fetch operation:", error);
           Swal.fire("Error applying for the job. Please try again later.");
         }
       }
@@ -60,6 +90,7 @@ const JobDetails = () => {
       Swal.fire("Only employees can apply for jobs");
     }
   };
+
   /** @todo Add in hyperlinks to all categories like location/job type etc., to apply for jobs with that category.
    * Possibly linked to the main home page in some way? */
   return (
