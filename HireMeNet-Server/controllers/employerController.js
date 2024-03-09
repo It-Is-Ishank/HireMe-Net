@@ -109,11 +109,10 @@ exports.updateJob = async (req, res) => {
     // Save the updated job
     await job.save();
 
-    res.json({ 
+    res.json({
       message: "Job updated successfully",
-      acknowledged : true
-            
-  });
+      acknowledged: true,
+    });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -164,5 +163,30 @@ exports.deleteJob = async (req, res) => {
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.getApplicantsForJob = async (req, res) => {
+  try {
+    const jobId = req.params.jobId;
+    console.log("jobId:", jobId);
+    const job = await Job.findById(jobId).populate("applicants.userId");
+    if (!job) {
+      return res
+        .status(404)
+        .json({ message: "No job with that ID was found." });
+    }
+
+    const applicants = job.applicants.map((applicant) => ({
+      userId: applicant._id,
+      fullName: applicant.userId.fullName,
+      status: applicant.applicationStatus,
+      resumeUrl: applicant.resumeUrl,
+    }));
+
+    res.json(applicants);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error." });
   }
 };

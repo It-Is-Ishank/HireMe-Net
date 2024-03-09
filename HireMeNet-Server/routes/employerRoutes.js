@@ -12,7 +12,7 @@ router.get('/my-jobs/:id', employerController.getEmployerJobs);
 router.get('/get-job/:id', employerController.getSingleJob);
 router.patch('/update-job/:id', employerController.updateJob);
 router.delete('/delete-job/:id',employerController.deleteJob);
-//router.get('/applicants/:jobId', employerController.getApplicantsForJob);
+router.get('/applicants/:jobId', employerController.getApplicantsForJob);
 //router.post('/manage-applicant/:jobId/:applicantId', employerController.manageApplicant);
 
 module.exports = router;

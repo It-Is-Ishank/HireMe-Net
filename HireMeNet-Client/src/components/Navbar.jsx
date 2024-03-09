@@ -22,6 +22,7 @@ const Navbar = () => {
       { path: "/", title: "Start a search" },
       { path: "/my-applied-jobs", title: "Applied Jobs" },
       { path: "/salary", title: "Estimated Salary" },
+      { path: "/contact", title: "Contact Us" },
     ];
   } else if (user?.data?.user?.role === "employer") {
     navItem = [
@@ -29,6 +30,7 @@ const Navbar = () => {
       { path: "/my-job", title: "My Jobs" },
       { path: "/salary", title: "Estimated Salary" },
       { path: "/post-job", title: "Post A Job" },
+      { path: "/contact", title: "Contact Us" },
     ];
   } else if (user?.data?.user?.role === "admin") {
     navItem = [
@@ -36,13 +38,15 @@ const Navbar = () => {
       { path: "/users", title: "User" },
       { path: "/salary", title: "Estimated Salary" },
       { path: "/jobs", title: "All jobs" },
+      { path: "/contact", title: "Contact Us" },
     ];
   } else {
     // Default navigation items when no user is logged in
     navItem = [
       { path: "/", title: "Home" },
       { path: "/about", title: "About" },
-      { path: "/contact", title: "Contact" },
+      { path: "/salary", title: "Estimated Salary" },
+      { path: "/contact", title: "Contact Us" },
     ];
   }
 

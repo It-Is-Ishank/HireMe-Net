@@ -25,6 +25,7 @@ const jobSchema = new mongoose.Schema(
     applicants: [
       {
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        fullName : {type : String},
         resumeUrl: { type: String },
         applicationDate: { type: Date },
         applicationStatus: {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const AppliedJobs = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
@@ -34,6 +35,7 @@ const AppliedJobs = () => {
     <div className="max-w-screen-2xl container mx-auto xl:px-24 px-4 my-8">
       <h1 className="text-3xl font-bold mb-4">Applied Jobs</h1>
       {appliedJobs.map((job) => (
+        <Link to={`/job/${job._id}`} key={job._id}>
         <div key={job._id} className="mb-8 border p-4 rounded-md shadow-md">
           <div className="flex items-center mb-4">
             <img
@@ -75,6 +77,7 @@ const AppliedJobs = () => {
               </div>
             ))}
         </div>
+        </Link>
       ))}
     </div>
   );

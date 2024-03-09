@@ -14,6 +14,7 @@ exports.getJobs = async (req, res) => {
 exports.applyForJob = async (req, res) => {
     console.log(req.body);
     const userId = req.body.userId;
+    const fullName =  req.body.fullName;
     const url = req.body.resumeUrl;
     const jobId = req.params.id;
   

@@ -36,6 +36,7 @@ const JobDetails = () => {
 
       if (url) {
         const userId = reduxData.data.user._id;
+        const fullName = reduxData.data.user.fullName;
 
         try {
           // Send the user's application data to the backend
@@ -46,6 +47,7 @@ const JobDetails = () => {
             },
             body: JSON.stringify({
               userId,
+              fullName,
               resumeUrl: url,
             }),
           });
