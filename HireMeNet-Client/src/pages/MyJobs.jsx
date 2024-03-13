@@ -6,10 +6,8 @@ const MyJobs = () => {
   const user = useSelector((state) => state.user);
   const [jobs, setJobs] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [filteredJobs, setFilteredJobs] = useState([]); // New state for filtered jobs
+  const [filteredJobs, setFilteredJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  // set current page
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 4;
 
@@ -17,9 +15,7 @@ const MyJobs = () => {
     setIsLoading(true);
 
     (async () => {
-      await fetch(
-        `/api/employer/my-jobs/${user.data.user._id}`
-      )
+      await fetch(`/api/employer/my-jobs/${user.data.user._id}`)
         .then((res) => res.json())
         .then((data) => {
           setJobs(data);
@@ -29,7 +25,6 @@ const MyJobs = () => {
   }, []);
 
   useEffect(() => {
-    // Update filtered jobs when the search text changes
     setIsLoading(true);
     const filter = jobs.filter(
       (job) =>
@@ -38,8 +33,6 @@ const MyJobs = () => {
     setFilteredJobs(filter);
     setIsLoading(false);
   }, [searchText, jobs]);
-
-  // pagination
 
   const indexOfLastItem = currentPage * resultsPerPage;
   const indexOfFirstItem = indexOfLastItem - resultsPerPage;
@@ -75,7 +68,7 @@ const MyJobs = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId }), // Include userId in the request body
+      body: JSON.stringify({ userId }),
     })
       .then((res) => {
         if (!res.ok) {
@@ -142,6 +135,7 @@ const MyJobs = () => {
 
             <div className="block w-full overflow-x-auto">
               <table className="items-center bg-transparent w-full border-collapse ">
+                
                 <thead>
                   <tr>
                     <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -157,6 +151,12 @@ const MyJobs = () => {
                       Salary
                     </th>
                     <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      Applicants
+                    </th>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      View Applicants
+                    </th>
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                       EDIT
                     </th>
                     <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -168,7 +168,7 @@ const MyJobs = () => {
                   <tbody>
                     <tr>
                       <td
-                        colSpan="6"
+                        colSpan="7"
                         className="flex items-center justify-center h-20"
                       >
                         <p>Loading...</p>
@@ -179,17 +179,29 @@ const MyJobs = () => {
                   <tbody>
                     {currentJobs.map((job, index) => (
                       <tr key={index}>
-                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                        {index + 1}
-                      </th>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        <Link to={`/applicants/${job._id}`}>{job.jobTitle}</Link>
-                      </td>
+                        <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                          {index + 1}
+                        </th>
+                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                          <Link to={`/applicants/${job._id}`}>
+                            {job.jobTitle}
+                          </Link>
+                        </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           {job.companyName}
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           ${job.minPrice} - ${job.maxPrice}
+                        </td>
+                        <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                          {job.applicants.length}
+                        </td>
+                        <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                          <button>
+                            <Link to={`/applicants/${job._id}`}>
+                              View Applicants
+                            </Link>
+                          </button>
                         </td>
                         <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                           <button>
@@ -212,12 +224,10 @@ const MyJobs = () => {
             </div>
           </div>
         </div>
-        {/* pagination  */}
 
         <div className="flex justify-center text-black space-x-8">
           {currentPage > 1 && (
             <button className="hover:underline" onClick={prevPage}>
-              {" "}
               Previous
             </button>
           )}
