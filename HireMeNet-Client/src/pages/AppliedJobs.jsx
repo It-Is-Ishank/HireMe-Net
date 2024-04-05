@@ -9,7 +9,7 @@ const AppliedJobs = () => {
   const id = reduxData?.data.user._id;
 
   useEffect(() => {
-    fetch(`/api/employee/applied-jobs/${id}`)
+    fetch(`https://hireme-net.onrender.com/api/employee/applied-jobs/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setAppliedJobs(data);

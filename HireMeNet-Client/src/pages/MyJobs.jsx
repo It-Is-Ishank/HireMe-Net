@@ -15,7 +15,7 @@ const MyJobs = () => {
     setIsLoading(true);
 
     (async () => {
-      await fetch(`/api/employer/my-jobs/${user.data.user._id}`)
+      await fetch(`https://hireme-net.onrender.com/api/employer/my-jobs/${user.data.user._id}`)
         .then((res) => res.json())
         .then((data) => {
           setJobs(data);
@@ -63,7 +63,7 @@ const MyJobs = () => {
 
   const handleDelete = async (id) => {
     const userId = user.data.user._id;
-    await fetch(`/api/employer/delete-job/${id}`, {
+    await fetch(`https://hireme-net.onrender.com/api/employer/delete-job/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

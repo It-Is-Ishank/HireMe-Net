@@ -40,7 +40,7 @@ const UpdateJob = () => {
     data.loggedIn = user.data.user._id.toString();
     console.log(data);
 
-    fetch(`/api/employer/update-job/${id}`, {
+    fetch(`https://hireme-net.onrender.com/api/employer/update-job/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

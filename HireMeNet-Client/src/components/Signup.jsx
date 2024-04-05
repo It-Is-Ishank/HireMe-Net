@@ -57,7 +57,7 @@ const Signup = () => {
       return;
     }
 
-    fetch("/api/user/sign-up", {
+    fetch(`https://hireme-net.onrender.com/api/user/sign-up`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

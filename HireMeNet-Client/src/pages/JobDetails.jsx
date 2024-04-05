@@ -20,7 +20,7 @@ const JobDetails = () => {
   console.log(reduxData);
 
   useEffect(() => {
-    fetch(`/api/employee/job/${id}`)
+    fetch(`https://hireme-net.onrender.com/api/employee/job/${id}`)
       .then((res) => res.json())
       .then((data) => setJob(data));
   }, []);
@@ -40,7 +40,7 @@ const JobDetails = () => {
 
         try {
           // Send the user's application data to the backend
-          const response = await fetch(`/api/employee/apply/${id}`, {
+          const response = await fetch(`https://hireme-net.onrender.com/api/employee/apply/${id}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

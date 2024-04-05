@@ -18,7 +18,7 @@ const PostJob = () => {
     data.userId = reduxData.data.user._id;
     data.skills = selectedOption;
   
-    fetch("/api/employer/post-job", {
+    fetch(`https://hireme-net.onrender.com/api/employer/post-job`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

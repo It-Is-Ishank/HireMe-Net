@@ -15,7 +15,7 @@ const Home = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("/api/employee/jobs") // changed port number old port was 8080
+    fetch(`https://hireme-net.onrender.com/api/employee/jobs`) // changed port number old port was 8080
       .then((res) => res.json())
       .then((data) => {
         setJobs(data);

@@ -46,7 +46,7 @@ const router = createBrowserRouter([
       {
         path: "/edit-job/:id",
         element: <UpdateJob />,
-        loader: ({ params }) => fetch(`/api/employer/get-job/${params.id}`),
+        loader: ({ params }) => fetch(`https://hireme-net.onrender.com/api/employer/get-job/${params.id}`),
       },
       {
         path: "/job/:id",
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       {
         path: "/applicants/:jobId",
         element: <ApplicantsPage />,
-        loader: ({ params }) => fetch(`/api/employer/get-job/${params.jobId}`),
+        loader: ({ params }) => fetch(`https://hireme-net.onrender.com/api/employer/get-job/${params.jobId}`),
       },
       {
         path: "*",

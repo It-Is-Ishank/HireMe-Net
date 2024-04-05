@@ -9,7 +9,7 @@ const ApplicantsPage = () => {
 
   useEffect(() => {
     console.log("jobId:", jobId);
-    fetch(`/api/employer/applicants/${jobId}`)
+    fetch(`https://hireme-net.onrender.com/api/employer/applicants/${jobId}`)
       .then((res) => res.json())
       .then((data) => {
         setApplicants(data);
