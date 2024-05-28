@@ -44,7 +44,6 @@ const Navbar = () => {
     // Default navigation items when no user is logged in
     navItem = [
       { path: "/", title: "Home" },
-      { path: "/about", title: "About" },
       { path: "/salary", title: "Estimated Salary" },
       { path: "/contact", title: "Contact Us" },
     ];
@@ -58,7 +57,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="max-w-screen-2xl container mx-auto xl:px-24 px-4">
+    <header className="max-w-screen-2xl container mx-auto xl:px-24 px-4 bg-[#fafafa]">
       <nav className="flex justify-between items-center py-6">
         <Link to="/" className="flex items-center gap-2 text-2xl">
           <svg xmlns="http://www.w3.org/2000/svg" width="29" height="30" viewBox="0 0 29 30" fill="none">
